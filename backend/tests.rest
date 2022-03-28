@@ -1,0 +1,26 @@
+// test routes to see, if login, register, etc work as intended
+get http://localhost:3001/show
+
+###
+
+get http://localhost:3001/delete
+
+###
+
+post http://localhost:3001/login
+Content-Type: application/json
+
+{
+    "email": "test@gmail.com",
+    "password": "password"
+}
+
+###
+
+post http://localhost:3001/register
+Content-Type: application/json
+
+{
+    "email": "test@gmail.com",
+    "password": "password"
+}
