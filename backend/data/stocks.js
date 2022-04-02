@@ -6,23 +6,27 @@ require("dotenv").config();
 router.post("/stocks", async (req, res) => {
   const { stocks } = req.body;
   let output = [];
-  let additionalData = {};
+  let stockQuery = "";
+
+  // stockQuery for the api call gets created
+  stocks.forEach((symbol) => {
+    stockQuery += `${symbol},`;
+  });
   try {
-    // iterates through stock symbol array
+    // batch request to get additional data
+    const response = await axios.get(
+      `https://api.twelvedata.com/quote?symbol=${stockQuery}&interval=1min&apikey=${process.env.API_KEY}`
+    );
+
+    // additional data gets stored in the output array
     for (let i = 0; i < stocks.length; i++) {
-      // api request to get additional data
-      const response = await axios.get(
-        `https://api.twelvedata.com/quote?symbol=${stocks[i]}&interval=1min&apikey=${process.env.API_KEY}`
-      );
-      // additional data gets stored in the output array
-      const { name, currency, symbol, close } = response.data;
-      additionalData = {
+      const { name, currency, symbol, close } = response.data[stocks[i]];
+      output.push({
         companyName: name,
-        currency: currency,
-        symbol: symbol,
+        currency,
+        symbol,
         latestPrice: close,
-      };
-      output.push(additionalData);
+      });
     }
 
     res.json({ success: true, stocks: output });
