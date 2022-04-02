@@ -14,25 +14,24 @@ export default function useGetUser() {
   });
   const [loading, setLoading] = useState(true);
 
-  // verifys the user's jwt and updates the context
-  const getUser = async () => {
-    // request to the backend to verify and decode the token
-    const response = await axios.get("http://localhost:3001/auth", {
-      headers: {
-        "x-access-token": sessionStorage.getItem("token") || "",
-      },
-    });
-    if (response.data.auth === true) {
-      setUser(response.data.user); // state gets updated of the token is valid
-      setLoading(false);
-    } else {
-      sessionStorage.clear();
-      setLoading(false);
-    }
-  };
-
-  // verifys the token on every mount
   useEffect(() => {
+    // verifys the user's jwt and updates the context
+    const getUser = async () => {
+      // request to the backend to verify and decode the token
+      const response = await axios.get("http://localhost:3001/auth", {
+        headers: {
+          "x-access-token": sessionStorage.getItem("token") || "",
+        },
+      });
+      if (response.data.auth === true) {
+        setUser(response.data.user); // state gets updated of the token is valid
+        setLoading(false);
+      } else {
+        sessionStorage.clear();
+        setLoading(false);
+      }
+    };
+
     getUser();
   }, []);
 
