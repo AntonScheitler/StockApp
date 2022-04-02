@@ -31,6 +31,7 @@ router.post("/stocks", async (req, res) => {
 
     res.json({ success: true, stocks: output });
   } catch (error) {
+    console.log(error);
     res.json({ success: false });
   }
 });

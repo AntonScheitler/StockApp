@@ -37,6 +37,7 @@ function Stocks() {
     };
     setSymbolInput("");
     const response = await axios.post("http://localhost:3001/stocks", data);
+
     if (response.data.success === true) {
       const { companyName, currency, symbol, latestPrice } =
         response.data.stocks[0];
