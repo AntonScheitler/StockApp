@@ -33,7 +33,7 @@ function Stocks() {
   // retrieves additional information on the requested stock
   const searchStock = async () => {
     const data = {
-      stocks: [symbolInput.toLowerCase().replaceAll(" ", "")],
+      stocks: [symbolInput.toUpperCase().replaceAll(" ", "")],
     };
     setSymbolInput("");
     const response = await axios.post("http://localhost:3001/stocks", data);

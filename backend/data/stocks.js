@@ -12,15 +12,15 @@ router.post("/stocks", async (req, res) => {
     for (let i = 0; i < stocks.length; i++) {
       // api request to get additional data
       const response = await axios.get(
-        `https://cloud.iexapis.com/stable/stock/${stocks[i]}/quote?token=${process.env.API_KEY}`
+        `https://api.twelvedata.com/quote?symbol=${stocks[i]}&interval=1min&apikey=${process.env.API_KEY}`
       );
       // additional data gets stored in the output array
-      const { companyName, currency, symbol, latestPrice } = response.data;
+      const { name, currency, symbol, close } = response.data;
       additionalData = {
-        companyName,
-        currency,
-        symbol,
-        latestPrice,
+        companyName: name,
+        currency: currency,
+        symbol: symbol,
+        latestPrice: close,
       };
       output.push(additionalData);
     }

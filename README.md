@@ -62,7 +62,7 @@ Als Datenbank wird MongoDB verwendet. Es wird eine einzige Datenbank für das Sp
 
 ### IEX Api
 
-Für das Einsehen von Informationen über Aktien wird die IEX Api verwendet
+Für das Einsehen von Informationen über Aktien wird die twelvedata Api verwendet
 
 ### Kommunikation
 

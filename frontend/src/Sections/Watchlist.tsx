@@ -27,7 +27,7 @@ function Watchlist() {
 
   // stock data gets updated periodically
   useEffect(() => {
-    const id = setInterval(() => refreshWatchlist(), 500);
+    const id = setInterval(() => refreshWatchlist(), 60000);
     return () => clearInterval(id);
   });
 
