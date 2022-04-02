@@ -9,29 +9,26 @@ import useWatchlist from "../Hooks/useWatchlist";
 // displays all the stocks, that the user has added to their watchlist
 function Watchlist() {
   const { user, loading } = useContext(UserContext);
-  const [refreshed, setRefreshed] = useState(false);
   const [watchlist, setWatchlist] = useState<any[]>([]);
 
   const { clearWatchlist } = useWatchlist();
 
-  // makes an api call for every stock in the watchlist, to get their current price, etc.
-  const refreshWatchlist = async () => {
-    const response = await axios.post("http://localhost:3001/stocks", {
-      stocks: user.watchlist,
-    });
-    if (response.data.success === true) {
-      setWatchlist(response.data.stocks);
-    }
-    setRefreshed(true);
-  };
-
-  // stock data gets updated periodically
+  // stock data gets updated upon mount
   useEffect(() => {
-    const id = setInterval(() => refreshWatchlist(), 60000);
-    return () => clearInterval(id);
-  });
+    // makes an api call to get the current price, etc of every stock in the watchlist
+    const refreshWatchlist = async () => {
+      const response = await axios.post("http://localhost:3001/stocks", {
+        stocks: user.watchlist,
+      });
+      if (response.data.success === true) {
+        setWatchlist(response.data.stocks);
+      }
+    };
 
-  if (loading || !refreshed) {
+    refreshWatchlist();
+  }, [user.watchlist]);
+
+  if (loading) {
     return <Loading />;
   }
 
