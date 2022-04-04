@@ -56,6 +56,7 @@ function Watchlist() {
             <h4>
               {stock.latestPrice} {stock.currency}
             </h4>
+            {/* removes this stock from the watchlist */}
             <button
               className="btn btn-outline-danger"
               onClick={() => removeStock(stock.symbol)}
