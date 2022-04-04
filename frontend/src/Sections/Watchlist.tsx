@@ -11,7 +11,7 @@ function Watchlist() {
   const { user, loading } = useContext(UserContext);
   const [watchlist, setWatchlist] = useState<any[]>([]);
 
-  const { clearWatchlist } = useWatchlist();
+  const { removeStock, clearWatchlist } = useWatchlist();
 
   // stock data gets updated upon mount
   useEffect(() => {
@@ -56,6 +56,12 @@ function Watchlist() {
             <h4>
               {stock.latestPrice} {stock.currency}
             </h4>
+            <button
+              className="btn btn-outline-danger"
+              onClick={() => removeStock(stock.symbol)}
+            >
+              Delete from Watchlist
+            </button>
           </Container>
         );
       })}
