@@ -28,6 +28,24 @@ router.post("/addStock", async (req, res) => {
   });
 });
 
+router.post("/removeStock", async (req, res) => {
+  const { stock, token } = req.body;
+  const email = jwt.decode(token).email;
+  const user = await User.findOne({ email: email });
+  user.watchlist = user.watchlist.filter((item) => {
+    return item != stock;
+  });
+  await user.save();
+
+  const tokenUser = {
+    email: user.email,
+    watchlist: user.watchlist,
+  };
+
+  const resToken = jwt.sign(tokenUser, process.env.TOKEN_SECRET);
+  res.json({ token: resToken });
+});
+
 // update the database, by clearing a user's watchlist
 router.post("/clearWatchlist", async (req, res) => {
   const { token } = req.body;
