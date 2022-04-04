@@ -1,7 +1,12 @@
 import axios from "axios";
+import { useContext } from "react";
+import { UserContext } from "../Contexts/UserContext";
+import useGetUser from "./useGetUser";
 
 // custom hook which handles changes to the user's watchlist
 export default function useWatchlist() {
+  const { user, setUser } = useContext(UserContext);
+
   // adds a stock to the watchlist
   const addStock = async (newStock: string) => {
     // request to the backend to change the user's data
@@ -20,7 +25,10 @@ export default function useWatchlist() {
       token: sessionStorage.getItem("token"),
     });
     sessionStorage.setItem("token", response.data.token);
-    // TODO update UserContext and trigger rerender
+    setUser({
+      ...user,
+      watchlist: user.watchlist.filter((item) => item != stock),
+    });
   };
 
   // clears the watchlist (doesn't trigger rerender yet)
@@ -30,7 +38,10 @@ export default function useWatchlist() {
       token: sessionStorage.getItem("token"),
     });
     sessionStorage.setItem("token", response.data.token); // updates the jwt
-    //TODO update userContext and trigger rerender?
+    setUser({
+      ...user,
+      watchlist: [],
+    });
   };
 
   return {

@@ -35,9 +35,7 @@ router.post("/removeStock", async (req, res) => {
   const email = jwt.decode(token).email;
   const user = await User.findOne({ email: email });
   // the specified stock gets filtered out from the watchlist array
-  user.watchlist = user.watchlist.filter((item) => {
-    return item != stock;
-  });
+  user.watchlist = user.watchlist.filter((item) => item != stock);
   await user.save();
 
   // generates a new token, sends it to the frontend

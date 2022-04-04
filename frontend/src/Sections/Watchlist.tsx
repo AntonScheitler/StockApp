@@ -26,7 +26,7 @@ function Watchlist() {
     };
 
     refreshWatchlist();
-  }, [user.watchlist]);
+  }, [user]);
 
   if (loading) {
     return <Loading />;
