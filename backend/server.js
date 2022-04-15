@@ -9,7 +9,9 @@ const app = express();
 const port = process.env.PORT || 3001;
 
 // conntects to a local mongoDB database
-mongoose.connect("mongodb://localhost/stonkusers");
+mongoose.connect(
+  `mongodb+srv://stocks-admin:${process.env.ATLAS_PASSWORD}@cluster0.jzk7h.mongodb.net/Cluster0?retryWrites=true&w=majority`
+);
 const db = mongoose.connection;
 db.on("error", (error) => console.log(error));
 db.once("open", () => console.log("connected to database"));
