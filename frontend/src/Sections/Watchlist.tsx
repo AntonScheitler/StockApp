@@ -17,9 +17,12 @@ function Watchlist() {
   useEffect(() => {
     // makes an api call to get the current price, etc of every stock in the watchlist
     const refreshWatchlist = async () => {
-      const response = await axios.post("http://localhost:3001/stocks", {
-        stocks: user.watchlist,
-      });
+      const response = await axios.post(
+        "https://generic-stock-app.herokuapp.com/stocks",
+        {
+          stocks: user.watchlist,
+        }
+      );
       if (response.data.success === true) {
         setWatchlist(response.data.stocks);
       }

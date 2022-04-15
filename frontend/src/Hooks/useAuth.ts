@@ -12,11 +12,14 @@ export default function useAuth() {
   // checks if the user's jwt is valid, updates userData and redirects the user
   const updateContext = async () => {
     // request to the backend to verify and decode the token
-    const response = await axios.get("http://localhost:3001/auth", {
-      headers: {
-        "x-access-token": sessionStorage.getItem("token") || "",
-      },
-    });
+    const response = await axios.get(
+      "https://generic-stock-app.herokuapp.com/auth",
+      {
+        headers: {
+          "x-access-token": sessionStorage.getItem("token") || "",
+        },
+      }
+    );
     if (response.data.auth === true) {
       setUser(response.data.user); // updates user data if token is valid
       navigate("/"); // redirects the user to the landing page
@@ -30,7 +33,7 @@ export default function useAuth() {
   const registerUser = async (userData: object) => {
     // request to the backend to save a new user in the database
     const response = await axios.post(
-      "http://localhost:3001/register",
+      "https://generic-stock-app.herokuapp.com/register",
       userData
     );
     if (response.data.auth === true) {
@@ -44,7 +47,10 @@ export default function useAuth() {
   // logs user in and redirects them
   const loginUser = async (userData: object) => {
     // request to the backend to check if the user exists/has the right password
-    const response = await axios.post("http://localhost:3001/login", userData);
+    const response = await axios.post(
+      "https://generic-stock-app.herokuapp.com/login",
+      userData
+    );
     if (response.data.auth === true) {
       sessionStorage.setItem("token", response.data.token); // saves the jwt in session storage
       await updateContext();
