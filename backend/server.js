@@ -18,7 +18,7 @@ db.once("open", () => console.log("connected to database"));
 
 // allows cors with the frontend
 
-app.use(express.static(path.resolve(__dirname, "../frontend/build")));
+app.use(express.static(path.resolve(__dirname, "./build")));
 
 app.use(
   cors({
@@ -29,7 +29,7 @@ app.use(express.json());
 app.use(routes);
 
 app.get("*", (req, res) => {
-  res.sendFile(path.resolve(__dirname, "../frontend/build", "index.html"));
+  res.sendFile(path.resolve(__dirname, "./build", "index.html"));
 });
 
 app.listen(port, () => {
