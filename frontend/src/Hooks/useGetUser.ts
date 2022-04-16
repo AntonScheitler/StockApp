@@ -18,14 +18,11 @@ export default function useGetUser() {
     // verifys the user's jwt and updates the context
     const getUser = async () => {
       // request to the backend to verify and decode the token
-      const response = await axios.get(
-        "https://generic-stock-app.herokuapp.com/auth",
-        {
-          headers: {
-            "x-access-token": sessionStorage.getItem("token") || "",
-          },
-        }
-      );
+      const response = await axios.get("auth", {
+        headers: {
+          "x-access-token": sessionStorage.getItem("token") || "",
+        },
+      });
       if (response.data.auth === true) {
         setUser(response.data.user); // state gets updated of the token is valid
         setLoading(false);

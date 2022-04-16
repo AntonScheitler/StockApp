@@ -36,10 +36,7 @@ function Stocks() {
       stocks: [symbolInput.toUpperCase().replaceAll(" ", "")],
     };
     setSymbolInput("");
-    const response = await axios.post(
-      "https://generic-stock-app.herokuapp.com/stocks",
-      data
-    );
+    const response = await axios.post("stocks", data);
 
     if (response.data.success === true) {
       const { companyName, currency, symbol, latestPrice } =

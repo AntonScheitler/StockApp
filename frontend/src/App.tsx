@@ -7,10 +7,12 @@ import Login from "./Login/Login";
 import Register from "./Login/Register";
 import { UserContext } from "./Contexts/UserContext";
 import useGetUser from "./Hooks/useGetUser";
+import axios from "axios";
 
 // straps all other components together and provides the UserContext with user data
 function App() {
   const { loading, user, setUser } = useGetUser();
+  axios.defaults.baseURL = "http://localhost:3001/";
 
   return (
     <UserContext.Provider value={{ loading, user, setUser }}>
