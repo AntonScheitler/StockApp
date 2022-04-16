@@ -12,7 +12,7 @@ import axios from "axios";
 // straps all other components together and provides the UserContext with user data
 function App() {
   const { loading, user, setUser } = useGetUser();
-  axios.defaults.baseURL = "http://localhost:3001/";
+  axios.defaults.baseURL = "https://generic-stock-app.herokuapp.com/";
 
   return (
     <UserContext.Provider value={{ loading, user, setUser }}>
